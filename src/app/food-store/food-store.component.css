@@ -1,0 +1,13 @@
+.list-group-item {
+  padding: 5px 0 0 10px;
+}
+
+.cart-item {
+  max-width: 400px;
+}
+
+@media (max-width: 752px) {
+  .food-list-cart {
+    margin-top: 60px;
+  }
+}

@@ -1,0 +1,22 @@
+<div class="row">
+  <div class="col-5 col-md-4">
+    <app-search-food-item (addToCart)="addToCart($event)">
+    </app-search-food-item>
+  </div>
+
+  <div class="col-7 col-md-8">
+    <h5>Here is list of all order foods and its price</h5>
+    <h6>Price: {{ priceOfOrder }} RSD</h6>
+    <ul class="list-group food-list-cart">
+      <li
+        class="list-group-item cart-item"
+        *ngFor="let foodItem of foodItemsInCart"
+      >
+        <app-food-item-in-cart
+          [foodItem]="foodItem"
+          (remove)="removeFromCart($event)"
+        ></app-food-item-in-cart>
+      </li>
+    </ul>
+  </div>
+</div>

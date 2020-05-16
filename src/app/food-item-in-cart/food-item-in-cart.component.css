@@ -1,0 +1,16 @@
+.btn-remove {
+  margin-right: 5px;
+}
+
+.to-right {
+  display: flex;
+  justify-content: end;
+  align-items: center;
+}
+
+@media (max-width: 752px) {
+  .to-right {
+    justify-content: start;
+    align-items: center;
+  }
+}

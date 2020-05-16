@@ -1,0 +1,20 @@
+<p>Start typing what food would you like and a list will appear</p>
+<input
+  #searchBox
+  id="searchBox"
+  (input)="search(searchBox.value)"
+  placeholder="What food would you like"
+  class="mb-2 mr-3"
+/>
+<button class="btn btn-info mb-2" (click)="showAllFoodItems()">
+  Show All
+</button>
+
+<ul class="list-group">
+  <li class="list-group-item" *ngFor="let foodItem of foodItems$ | async">
+    <app-food-item
+      [foodItem]="foodItem"
+      (addToCart)="addToCartBtnClick($event)"
+    ></app-food-item>
+  </li>
+</ul>
