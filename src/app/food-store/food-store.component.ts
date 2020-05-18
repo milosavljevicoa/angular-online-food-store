@@ -9,19 +9,15 @@ import { Subject } from 'rxjs';
   styleUrls: ['./food-store.component.css'],
 })
 export class FoodStoreComponent implements OnInit {
-  foodItems: FoodItem[];
   foodItemsInCart: FoodItem[];
   priceOfOrder: number;
 
-  constructor(private foodItemsService: FoodItemsService) {}
+  constructor() {}
 
   ngOnInit(): void {
-    this.getFoodItems();
     this.priceOfOrder = 0;
     this.foodItemsInCart = new Array();
   }
-
-  getFoodItems(): void {}
 
   addToCart(foodItem: FoodItem): void {
     this.foodItemsInCart.push(foodItem);

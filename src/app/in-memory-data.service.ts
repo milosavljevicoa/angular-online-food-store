@@ -8,18 +8,27 @@ import { FoodItem } from './food-item';
 export class InMemoryDataService implements InMemoryDbService {
   createDb() {
     const foodItems = [
-      { id: 11, name: 'Milk', price: 99 },
-      { id: 12, name: 'Chocolate', price: 140 },
-      { id: 13, name: 'Rice', price: 120 },
-      { id: 14, name: 'Kiwi', price: 90 },
-      { id: 15, name: 'Ice cream', price: 170 },
-      { id: 16, name: 'Banana', price: 110 },
-      { id: 17, name: 'Apple', price: 100 },
-      { id: 18, name: 'Strawberry', price: 220 },
-      { id: 19, name: 'Mango', price: 190 },
-      { id: 20, name: 'Pizza', price: 360 },
+      { id: 1, name: 'Chococalte Pancakes', price: 100, madeBy: 3 },
+      { id: 2, name: 'Cheeseburger', price: 160, madeBy: 2 },
+      { id: 3, name: 'Garlic Bread', price: 220, madeBy: 4 },
+      { id: 4, name: 'Pasta Carbonara', price: 240, madeBy: 1 },
+      { id: 5, name: 'Pasta Bolognese', price: 240, madeBy: 1 },
+      { id: 6, name: 'Mushroom Risotto', price: 220, madeBy: 1 },
+      { id: 7, name: 'Apple Pie', price: 180, madeBy: 3 },
+      { id: 8, name: 'Macarons', price: 220, madeBy: 3 },
+      { id: 9, name: 'Pizza Margherita ', price: 320, madeBy: 4 },
+      { id: 10, name: 'Delux Burger', price: 210, madeBy: 2 },
+      { id: 11, name: 'Plain Burger', price: 130, madeBy: 2 },
+      { id: 10, name: 'Chicken Burger', price: 360, madeBy: 2 },
     ];
-    return { foodItems };
+
+    const foodProducers = [
+      { id: 1, name: 'Pasta Bar' },
+      { id: 2, name: 'Burger Shop' },
+      { id: 3, name: 'Sweets' },
+      { id: 4, name: 'Pizza Shop' },
+    ];
+    return { foodItems, foodProducers };
   }
 
   genId(foodItems: FoodItem[]): number {

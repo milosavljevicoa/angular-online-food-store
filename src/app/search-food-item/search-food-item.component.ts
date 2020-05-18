@@ -2,7 +2,14 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { FoodItem } from '../food-item';
 import { Observable, Subject } from 'rxjs';
 import { FoodItemsService } from '../food-items.service';
-import { distinctUntilChanged, debounceTime, switchMap } from 'rxjs/operators';
+import {
+  distinctUntilChanged,
+  debounceTime,
+  switchMap,
+  concatAll,
+  tap,
+  take,
+} from 'rxjs/operators';
 
 @Component({
   selector: 'app-search-food-item',
@@ -10,21 +17,34 @@ import { distinctUntilChanged, debounceTime, switchMap } from 'rxjs/operators';
   styleUrls: ['./search-food-item.component.css'],
 })
 export class SearchFoodItemComponent implements OnInit {
-  @Output() addToCart: EventEmitter<FoodItem> = new EventEmitter<FoodItem>();
-
-  foodItems$: Observable<FoodItem[]>;
+  public fastFoodRestaurants: string[];
+  public foodItemsToDisplay: FoodItem[];
   private searchTerms = new Subject<string>();
+  public selectedFastFood: string;
+  @Output() addToCart: EventEmitter<FoodItem> = new EventEmitter<FoodItem>();
 
   constructor(private foodItemService: FoodItemsService) {}
 
   ngOnInit(): void {
-    this.foodItems$ = this.searchTerms.pipe(
-      debounceTime(350),
-      distinctUntilChanged(),
-      switchMap((foodItem: string) =>
-        this.foodItemService.searchFoodItem(foodItem)
+    this.foodItemsToDisplay = [];
+    this.fastFoodRestaurants = ['All'];
+    this.selectedFastFood = this.fastFoodRestaurants[0];
+    this.foodItemService
+      .getFastFoodRestaurants()
+      .subscribe((x) => this.fastFoodRestaurants.push(x));
+
+    this.searchTerms
+      .pipe(
+        debounceTime(350),
+        distinctUntilChanged(),
+        switchMap((foodItem: string) =>
+          this.foodItemService.searchFoodItem(foodItem)
+        )
       )
-    );
+      .subscribe(
+        (foodItemsToDisplay: FoodItem[]) =>
+          (this.foodItemsToDisplay = foodItemsToDisplay)
+      );
   }
 
   addToCartBtnClick(selectedFoodItem: FoodItem) {
@@ -35,7 +55,13 @@ export class SearchFoodItemComponent implements OnInit {
     this.searchTerms.next(foodItemName);
   }
 
-  showAllFoodItems() {
-    this.searchTerms.next(this.foodItemService.showAllFoodItemsString);
+  onChangeShowAllFoodItemsFromSelectedFastFoodRestaurants() {
+    this.foodItemService
+      .getAllFoodItemsFrom(this.selectedFastFood)
+      .pipe(take(1))
+      .subscribe(
+        (foodItemsToDisplay: FoodItem[]) =>
+          (this.foodItemsToDisplay = foodItemsToDisplay)
+      );
   }
 }

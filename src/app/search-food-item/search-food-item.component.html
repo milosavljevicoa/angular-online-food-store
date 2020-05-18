@@ -6,15 +6,23 @@
   placeholder="What food would you like"
   class="mb-2 mr-3"
 />
-<button class="btn btn-info mb-2" (click)="showAllFoodItems()">
-  Show All
-</button>
 
-<ul class="list-group">
-  <li class="list-group-item" *ngFor="let foodItem of foodItems$ | async">
+<p>Or select from which fast food restauran would you like to eat</p>
+<select
+  #selectFastFood
+  [(ngModel)]="selectedFastFood"
+  (change)="onChangeShowAllFoodItemsFromSelectedFastFoodRestaurants()"
+>
+  <option *ngFor="let producer of fastFoodRestaurants" value="{{ producer }}">{{
+    producer
+  }}</option>
+</select>
+
+<ul class="list-group mt-4">
+  <li class="list-group-item" *ngFor="let foodItem of foodItemsToDisplay">
     <app-food-item
-      [foodItem]="foodItem"
-      (addToCart)="addToCartBtnClick($event)"
+      [foodItemToDisplay]="foodItem"
+      (addToCart)="addToCartBtnClick(foodItem)"
     ></app-food-item>
   </li>
 </ul>
