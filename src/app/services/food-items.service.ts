@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, of, concat } from 'rxjs';
-import { FoodItem } from './food-item';
+import { Observable, of } from 'rxjs';
+import { FoodItem } from '../models/food-item';
+import { FastFood } from '../models/fastFood';
 
-import { catchError, concatAll, map, retry, switchMap } from 'rxjs/operators';
+import { catchError, concatAll, map, switchMap } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root',
@@ -28,7 +29,7 @@ export class FoodItemsService {
     return this.http
       .get<FastFood[]>(`${this.foodProducersUrl}/?name=${fastFoodRestaurants}`)
       .pipe(
-        catchError(this.handleError<FoodItem[]>('searchFood', [])),
+        catchError(this.handleError<FastFood[]>('getAllFoodItemsFrom', [])),
         concatAll(),
         switchMap((producer: FastFood) =>
           this.http.get<FoodItem[]>(
@@ -41,19 +42,19 @@ export class FoodItemsService {
   getAllFoodItems(): Observable<FoodItem[]> {
     return this.http
       .get<FoodItem[]>(this.foodItemsUrl)
-      .pipe(catchError(this.handleError<FoodItem[]>('getFoodItems', null)));
+      .pipe(catchError(this.handleError<FoodItem[]>('getAllFoodItems', [])));
   }
 
   searchFoodItem(foodItem: string): Observable<FoodItem[]> {
     if (!foodItem.trim()) return of([]);
     return this.http
       .get<FoodItem[]>(`${this.foodItemsUrl}/?name=${foodItem}`)
-      .pipe(catchError(this.handleError<FoodItem[]>('searchFood', [])));
+      .pipe(catchError(this.handleError<FoodItem[]>('searchFoodItem', [])));
   }
 
   getFastFoodRestaurants(): Observable<string> {
     return this.http.get<FastFood[]>(this.foodProducersUrl).pipe(
-      catchError(this.handleError<FoodItem[]>('searchFood', [])),
+      catchError(this.handleError<FastFood[]>('getFastFoodRestaurants', [])),
       concatAll(),
       map((DTO: any) => DTO.name)
     );

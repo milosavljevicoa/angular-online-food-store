@@ -1,7 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FoodItem } from '../food-item';
-import { FoodItemsService } from '../food-items.service';
-import { Subject } from 'rxjs';
+import { FoodItem } from 'src/app/models/food-item';
 
 @Component({
   selector: 'app-food-store',
@@ -9,8 +7,8 @@ import { Subject } from 'rxjs';
   styleUrls: ['./food-store.component.css'],
 })
 export class FoodStoreComponent implements OnInit {
-  foodItemsInCart: FoodItem[];
-  priceOfOrder: number;
+  foodItemsInCart!: FoodItem[];
+  priceOfOrder!: number;
 
   constructor() {}
 
@@ -25,9 +23,14 @@ export class FoodStoreComponent implements OnInit {
   }
 
   removeFromCart(foodItem: FoodItem): void {
-    this.foodItemsInCart = this.foodItemsInCart.filter(
-      (foodItemInCart: FoodItem) => foodItem.id !== foodItemInCart.id
-    );
+    const index: number = this.foodItemsInCart.indexOf(foodItem);
+    if (index >= 0) {
+      this.foodItemsInCart.splice(index, 1);
+    }
+
+    // this.foodItemsInCart = this.foodItemsInCart.filter(
+    //   (foodItemInCart: FoodItem) => foodItem.id !== foodItemInCart.id
+    // );
     this.calculatePriceOfOrder();
   }
 

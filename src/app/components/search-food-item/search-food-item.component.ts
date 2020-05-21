@@ -1,15 +1,13 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { FoodItem } from '../food-item';
-import { Observable, Subject } from 'rxjs';
-import { FoodItemsService } from '../food-items.service';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Subject } from 'rxjs';
 import {
   distinctUntilChanged,
   debounceTime,
   switchMap,
-  concatAll,
-  tap,
   take,
 } from 'rxjs/operators';
+import { FoodItem } from 'src/app/models/food-item';
+import { FoodItemsService } from 'src/app/services/food-items.service';
 
 @Component({
   selector: 'app-search-food-item',
