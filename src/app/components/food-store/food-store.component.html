@@ -6,14 +6,17 @@
 
   <div class="col-12 col-md-6">
     <h5>Here is list of all order foods and its price</h5>
-    <h6>Price: {{ priceOfOrder }} RSD</h6>
+    <h6 class="d-inline mr-2">Price: {{ priceOfOrder$ | async }} RSD</h6>
+    <app-burgers-as-price [priceOfOrder$]="priceOfOrder$">
+    </app-burgers-as-price>
     <ul class="list-group food-list-cart">
       <li
         class="list-group-item cart-item"
-        *ngFor="let foodItem of foodItemsInCart"
+        *ngFor="let orderIdWithItemInCart of orderIdWithItemsInCart"
       >
         <app-food-item-in-cart
-          [foodItem]="foodItem"
+          [orderId]="orderIdWithItemInCart[0]"
+          [foodItem]="orderIdWithItemInCart[1]"
           (remove)="removeFromCart($event)"
         ></app-food-item-in-cart>
       </li>

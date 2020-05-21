@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FoodItem } from 'src/app/models/food-item';
+import { Subject } from 'rxjs';
 
 @Component({
   selector: 'app-food-store',
@@ -7,37 +8,42 @@ import { FoodItem } from 'src/app/models/food-item';
   styleUrls: ['./food-store.component.css'],
 })
 export class FoodStoreComponent implements OnInit {
-  foodItemsInCart!: FoodItem[];
-  priceOfOrder!: number;
+  private numberOfItemsInCart: number;
+
+  public orderIdWithItemsInCart: Array<[number, FoodItem]>;
+  public priceOfOrder$: Subject<number>;
 
   constructor() {}
 
   ngOnInit(): void {
-    this.priceOfOrder = 0;
-    this.foodItemsInCart = new Array();
+    this.numberOfItemsInCart = 0;
+    this.priceOfOrder$ = new Subject<number>();
+    this.orderIdWithItemsInCart = new Array<[number, FoodItem]>();
   }
 
+  // ngAfterViewInit(): void {
+  //   this.priceOfOrder$.next(0);
+  // }
+
   addToCart(foodItem: FoodItem): void {
-    this.foodItemsInCart.push(foodItem);
+    this.orderIdWithItemsInCart.push([this.numberOfItemsInCart, foodItem]);
+    this.numberOfItemsInCart++;
     this.calculatePriceOfOrder();
   }
 
-  removeFromCart(foodItem: FoodItem): void {
-    const index: number = this.foodItemsInCart.indexOf(foodItem);
-    if (index >= 0) {
-      this.foodItemsInCart.splice(index, 1);
-    }
+  removeFromCart(cartFoodItemId: number): void {
+    this.orderIdWithItemsInCart = this.orderIdWithItemsInCart.filter(
+      (cartFoodItem: [number, FoodItem]) => cartFoodItem[0] !== cartFoodItemId
+    );
 
-    // this.foodItemsInCart = this.foodItemsInCart.filter(
-    //   (foodItemInCart: FoodItem) => foodItem.id !== foodItemInCart.id
-    // );
     this.calculatePriceOfOrder();
   }
 
   calculatePriceOfOrder() {
-    this.priceOfOrder = 0;
-    this.foodItemsInCart.forEach((foodItemInCart: FoodItem) => {
-      this.priceOfOrder += foodItemInCart.price;
+    let priceOfOrder: number = 0;
+    this.orderIdWithItemsInCart.forEach((cartFoodItem: [number, FoodItem]) => {
+      priceOfOrder += cartFoodItem[1].price;
     });
+    this.priceOfOrder$.next(priceOfOrder);
   }
 }
