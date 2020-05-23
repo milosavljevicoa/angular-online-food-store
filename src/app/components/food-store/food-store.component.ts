@@ -24,9 +24,7 @@ export class FoodStoreComponent implements OnInit {
     this.foodItemsInCart = new Array<FoodItem>();
   }
 
-  // ngAfterViewInit(): void {
-  //   this.priceOfOrder$.next(0);
-  // }
+  ngAfterViewInit(): void {}
 
   addToCart(foodItem: FoodItem): void {
     const newFoodInCart = { ...foodItem };
