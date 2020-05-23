@@ -8,4 +8,3 @@ export const removeFromPrice = createAction(
   '[Price] RemoveFromPrice',
   props<{ price: number }>()
 );
-// export const reset = createAction('[Price] Reset');
