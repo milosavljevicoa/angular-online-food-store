@@ -6,8 +6,8 @@ import {
   switchMap,
   take,
 } from 'rxjs/operators';
-import { FoodItem } from 'src/app/models/food-item.model';
-import { FoodItemsService } from 'src/app/services/food-items.service';
+import { FoodItem } from '../../models/food-item.model';
+import { FoodItemsService } from '../../services/food-items.service';
 
 @Component({
   selector: 'app-search-food-item',

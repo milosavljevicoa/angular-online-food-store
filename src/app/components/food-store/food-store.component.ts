@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FoodItem } from 'src/app/models/food-item.model';
+import { FoodItem } from '../../models/food-item.model';
 import { Observable } from 'rxjs';
 import * as PriceActions from '../../actions/price.action';
 import { select, Store } from '@ngrx/store';
@@ -35,18 +35,12 @@ export class FoodStoreComponent implements OnInit {
     this.store.dispatch(
       PriceActions.addToPrice({ price: newFoodInCart.price })
     );
-    console.log(this.foodItemsInCart);
   }
 
   removeFromCart(foodItem: FoodItem): void {
-    console.log(foodItem);
-    console.log(this.foodItemsInCart);
     let priceOfTheFoodToRemove: number = foodItem.price;
     this.foodItemsInCart = this.foodItemsInCart.filter(
-      (cartFoodItem: FoodItem) => {
-        console.log(cartFoodItem);
-        return cartFoodItem.idInCart !== foodItem.idInCart;
-      }
+      (cartFoodItem: FoodItem) => cartFoodItem.idInCart !== foodItem.idInCart
     );
     this.store.dispatch(
       PriceActions.removeFromPrice({ price: priceOfTheFoodToRemove })

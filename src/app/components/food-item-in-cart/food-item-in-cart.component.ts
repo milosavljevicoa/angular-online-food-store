@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { FoodItem } from 'src/app/models/food-item.model';
+import { FoodItem } from '../../models/food-item.model';
 
 @Component({
   selector: 'app-food-item-in-cart',
@@ -11,9 +11,7 @@ export class FoodItemInCartComponent implements OnInit {
   @Output() remove: EventEmitter<FoodItem> = new EventEmitter<FoodItem>();
   constructor() {}
 
-  ngOnInit(): void {
-    console.log(this.foodItem);
-  }
+  ngOnInit(): void {}
 
   public removeFromCart(): void {
     this.remove.emit(this.foodItem);

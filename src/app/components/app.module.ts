@@ -13,7 +13,7 @@ import { SearchFoodItemComponent } from './search-food-item/search-food-item.com
 import { BurgersAsPriceComponent } from './burgers-as-price/burgers-as-price.component';
 
 import { StoreModule } from '@ngrx/store';
-import { priceReducer } from '../reducer/price.reduces';
+import { priceReducer } from '../reducer/price.reducer';
 @NgModule({
   declarations: [
     AppComponent,
