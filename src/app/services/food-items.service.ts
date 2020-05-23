@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
-import { FoodItem } from '../models/food-item';
-import { FastFood } from '../models/fastFood';
+import { FoodItem } from '../models/food-item.model';
+import { FastFood } from '../models/fast-food.model';
 
 import { catchError, concatAll, map, switchMap } from 'rxjs/operators';
 

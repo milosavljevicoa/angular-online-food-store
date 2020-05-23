@@ -1,6 +1,7 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { Subject, Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { Component, OnInit } from '@angular/core';
+import { Observable, of } from 'rxjs';
+import { mergeMap } from 'rxjs/operators';
+import { Store, select } from '@ngrx/store';
 
 @Component({
   selector: 'app-burgers-as-price',
@@ -8,25 +9,29 @@ import { map } from 'rxjs/operators';
   styleUrls: ['./burgers-as-price.component.css'],
 })
 export class BurgersAsPriceComponent implements OnInit {
-  @Input() priceOfOrder$: Subject<number>;
   public howManyToDisplay$: Observable<Array<null>>;
 
   private priceToAddNewBurger: number;
 
-  constructor() {
+  constructor(private store: Store<{ price: number }>) {
     this.priceToAddNewBurger = 500;
+
+    this.howManyToDisplay$ = store.pipe(
+      select('price'),
+      mergeMap((price: number) => this.convertPriceToBurgersToDisplay$(price))
+    );
   }
 
-  ngOnInit(): void {
-    this.howManyToDisplay$ = this.priceOfOrder$.pipe(
-      map((price: number) => Math.floor(price / this.priceToAddNewBurger)),
-      map((howManyBurgersToDisplay: number) =>
-        this.createNgIteration(howManyBurgersToDisplay)
-      )
-    );
+  private convertPriceToBurgersToDisplay$(
+    price: number
+  ): Observable<Array<null>> {
+    let numberOfBurgersToDisplay = Math.floor(price / this.priceToAddNewBurger);
+    return of(this.createNgIteration(numberOfBurgersToDisplay));
   }
 
   private createNgIteration(numberOfElements: number): Array<null> {
     return Array(numberOfElements).fill(0);
   }
+
+  ngOnInit(): void {}
 }

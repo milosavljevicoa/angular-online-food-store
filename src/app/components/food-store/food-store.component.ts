@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { FoodItem } from 'src/app/models/food-item';
-import { Subject } from 'rxjs';
+import { FoodItem } from 'src/app/models/food-item.model';
+import { Observable } from 'rxjs';
+import * as PriceActions from '../../actions/price.action';
+import { select, Store } from '@ngrx/store';
 
 @Component({
   selector: 'app-food-store',
@@ -10,15 +12,16 @@ import { Subject } from 'rxjs';
 export class FoodStoreComponent implements OnInit {
   private numberOfItemsInCart: number;
 
-  public orderIdWithItemsInCart: Array<[number, FoodItem]>;
-  public priceOfOrder$: Subject<number>;
+  public foodItemsInCart: Array<FoodItem>;
+  public priceOfOrder$: Observable<number>;
 
-  constructor() {}
+  constructor(private store: Store<{ price: number }>) {
+    this.priceOfOrder$ = store.pipe(select('price'));
+  }
 
   ngOnInit(): void {
     this.numberOfItemsInCart = 0;
-    this.priceOfOrder$ = new Subject<number>();
-    this.orderIdWithItemsInCart = new Array<[number, FoodItem]>();
+    this.foodItemsInCart = new Array<FoodItem>();
   }
 
   // ngAfterViewInit(): void {
@@ -26,24 +29,27 @@ export class FoodStoreComponent implements OnInit {
   // }
 
   addToCart(foodItem: FoodItem): void {
-    this.orderIdWithItemsInCart.push([this.numberOfItemsInCart, foodItem]);
-    this.numberOfItemsInCart++;
-    this.calculatePriceOfOrder();
-  }
-
-  removeFromCart(cartFoodItemId: number): void {
-    this.orderIdWithItemsInCart = this.orderIdWithItemsInCart.filter(
-      (cartFoodItem: [number, FoodItem]) => cartFoodItem[0] !== cartFoodItemId
+    const newFoodInCart = { ...foodItem };
+    newFoodInCart.idInCart = this.numberOfItemsInCart++;
+    this.foodItemsInCart.push(newFoodInCart);
+    this.store.dispatch(
+      PriceActions.addToPrice({ price: newFoodInCart.price })
     );
-
-    this.calculatePriceOfOrder();
+    console.log(this.foodItemsInCart);
   }
 
-  calculatePriceOfOrder() {
-    let priceOfOrder: number = 0;
-    this.orderIdWithItemsInCart.forEach((cartFoodItem: [number, FoodItem]) => {
-      priceOfOrder += cartFoodItem[1].price;
-    });
-    this.priceOfOrder$.next(priceOfOrder);
+  removeFromCart(foodItem: FoodItem): void {
+    console.log(foodItem);
+    console.log(this.foodItemsInCart);
+    let priceOfTheFoodToRemove: number = foodItem.price;
+    this.foodItemsInCart = this.foodItemsInCart.filter(
+      (cartFoodItem: FoodItem) => {
+        console.log(cartFoodItem);
+        return cartFoodItem.idInCart !== foodItem.idInCart;
+      }
+    );
+    this.store.dispatch(
+      PriceActions.removeFromPrice({ price: priceOfTheFoodToRemove })
+    );
   }
 }

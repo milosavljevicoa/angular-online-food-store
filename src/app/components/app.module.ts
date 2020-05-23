@@ -12,6 +12,8 @@ import { FoodItemInCartComponent } from './food-item-in-cart/food-item-in-cart.c
 import { SearchFoodItemComponent } from './search-food-item/search-food-item.component';
 import { BurgersAsPriceComponent } from './burgers-as-price/burgers-as-price.component';
 
+import { StoreModule } from '@ngrx/store';
+import { priceReducer } from '../reducer/price.reduces';
 @NgModule({
   declarations: [
     AppComponent,
@@ -28,6 +30,7 @@ import { BurgersAsPriceComponent } from './burgers-as-price/burgers-as-price.com
     HttpClientInMemoryWebApiModule.forRoot(InMemoryDataService, {
       dataEncapsulation: false,
     }),
+    StoreModule.forRoot({ price: priceReducer }),
   ],
   providers: [],
   bootstrap: [AppComponent],

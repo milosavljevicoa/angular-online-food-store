@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { FoodItem } from 'src/app/models/food-item';
+import { FoodItem } from 'src/app/models/food-item.model';
 
 @Component({
   selector: 'app-food-item-in-cart',
@@ -8,13 +8,14 @@ import { FoodItem } from 'src/app/models/food-item';
 })
 export class FoodItemInCartComponent implements OnInit {
   @Input() public foodItem: FoodItem;
-  @Input() public orderId: number;
-  @Output() remove: EventEmitter<number> = new EventEmitter<number>();
+  @Output() remove: EventEmitter<FoodItem> = new EventEmitter<FoodItem>();
   constructor() {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    console.log(this.foodItem);
+  }
 
   public removeFromCart(): void {
-    this.remove.emit(this.orderId);
+    this.remove.emit(this.foodItem);
   }
 }

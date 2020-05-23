@@ -6,7 +6,7 @@ import {
   switchMap,
   take,
 } from 'rxjs/operators';
-import { FoodItem } from 'src/app/models/food-item';
+import { FoodItem } from 'src/app/models/food-item.model';
 import { FoodItemsService } from 'src/app/services/food-items.service';
 
 @Component({
