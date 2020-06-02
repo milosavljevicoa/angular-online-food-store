@@ -2,7 +2,7 @@
 <input
   #searchBox
   id="searchBox"
-  (input)="search(searchBox.value)"
+  (input)="searchFoodItemByName(searchBox.value)"
   placeholder="What food would you like"
   class="mb-2 mr-3"
 />
@@ -11,13 +11,15 @@
 <select
   #selectFastFood
   [(ngModel)]="selectedFastFood"
-  (change)="onChangeShowAllFoodItemsFromSelectedFastFoodRestaurants()"
+  (change)="searchGivenFastFoodRestaurant(selectFastFood.value)"
 >
-  <option *ngFor="let producer of fastFoodRestaurants" value="{{ producer }}">{{
-    producer
-  }}</option>
+  <option
+    *ngFor="let fastFoodRestaurant of fastFoodRestaurants"
+    value="{{ fastFoodRestaurant }}"
+    >{{ fastFoodRestaurant }}</option
+  >
 </select>
-
+<!-- 
 <ul class="list-group mt-4">
   <li class="list-group-item" *ngFor="let foodItem of foodItemsToDisplay">
     <app-food-item
@@ -25,4 +27,4 @@
       (addToCart)="addToCartBtnClick(foodItem)"
     ></app-food-item>
   </li>
-</ul>
+</ul> -->

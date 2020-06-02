@@ -1,13 +1,9 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
-import { Subject } from 'rxjs';
-import {
-  distinctUntilChanged,
-  debounceTime,
-  switchMap,
-  take,
-} from 'rxjs/operators';
+import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
+import { Subject, Observable } from 'rxjs';
+import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 import { FoodItem } from '../../models/food-item.model';
-import { FoodItemsService } from '../../services/food-items.service';
+import { FoodService } from '../../services/food.service';
+import { FastFoodRestaurant } from 'src/app/models/fast-food-restaurants.model';
 
 @Component({
   selector: 'app-search-food-item',
@@ -15,51 +11,44 @@ import { FoodItemsService } from '../../services/food-items.service';
   styleUrls: ['./search-food-item.component.css'],
 })
 export class SearchFoodItemComponent implements OnInit {
-  public fastFoodRestaurants: string[];
-  public foodItemsToDisplay: FoodItem[];
-  private searchTerms = new Subject<string>();
-  public selectedFastFood: string;
-  @Output() addToCart: EventEmitter<FoodItem> = new EventEmitter<FoodItem>();
+  private nameOfFoodItemToSearch$: Subject<string> = new Subject<string>();
 
-  constructor(private foodItemService: FoodItemsService) {}
+  public fastFoodRestaurants: string[];
+  public selectedFastFood: string;
+
+  @Input() allFastFoodRestaurants$: Observable<Array<string>>;
+
+  @Output() fastFoodRestaurantEmitter: EventEmitter<string> = new EventEmitter<
+    string
+  >();
+  @Output() foodItemToSearchEmitter: EventEmitter<string> = new EventEmitter<
+    string
+  >();
+
+  constructor() {}
 
   ngOnInit(): void {
-    this.foodItemsToDisplay = [];
-    this.fastFoodRestaurants = ['All'];
-    this.selectedFastFood = this.fastFoodRestaurants[0];
-    this.foodItemService
-      .getFastFoodRestaurants()
-      .subscribe((x) => this.fastFoodRestaurants.push(x));
+    this.allFastFoodRestaurants$.subscribe(
+      (allFastFoodRestaurants: Array<string>) => {
+        this.fastFoodRestaurants = [
+          FoodService.ALL_RESTAURANTS,
+          ...allFastFoodRestaurants,
+        ];
+      }
+    );
 
-    this.searchTerms
-      .pipe(
-        debounceTime(350),
-        distinctUntilChanged(),
-        switchMap((foodItem: string) =>
-          this.foodItemService.searchFoodItem(foodItem)
-        )
-      )
-      .subscribe(
-        (foodItemsToDisplay: FoodItem[]) =>
-          (this.foodItemsToDisplay = foodItemsToDisplay)
-      );
+    this.nameOfFoodItemToSearch$
+      .pipe(debounceTime(350), distinctUntilChanged())
+      .subscribe((nameOfFoodItem: string) => {
+        this.foodItemToSearchEmitter.emit(nameOfFoodItem);
+      });
   }
 
-  addToCartBtnClick(selectedFoodItem: FoodItem) {
-    this.addToCart.emit(selectedFoodItem);
+  searchGivenFastFoodRestaurant(fastFoodRestaurant: string) {
+    this.fastFoodRestaurantEmitter.emit(fastFoodRestaurant);
   }
 
-  search(foodItemName: string) {
-    this.searchTerms.next(foodItemName);
-  }
-
-  onChangeShowAllFoodItemsFromSelectedFastFoodRestaurants() {
-    this.foodItemService
-      .getAllFoodItemsFrom(this.selectedFastFood)
-      .pipe(take(1))
-      .subscribe(
-        (foodItemsToDisplay: FoodItem[]) =>
-          (this.foodItemsToDisplay = foodItemsToDisplay)
-      );
+  searchFoodItemByName(foodItemName: string) {
+    this.nameOfFoodItemToSearch$.next(foodItemName);
   }
 }

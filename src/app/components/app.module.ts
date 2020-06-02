@@ -12,8 +12,15 @@ import { FoodItemInCartComponent } from './food-item-in-cart/food-item-in-cart.c
 import { SearchFoodItemComponent } from './search-food-item/search-food-item.component';
 import { BurgersAsPriceComponent } from './burgers-as-price/burgers-as-price.component';
 
-import { StoreModule } from '@ngrx/store';
-import { priceReducer } from '../reducer/price.reducer';
+import { StoreModule, ActionReducerMap } from '@ngrx/store';
+import { priceReducer } from '../price.NgRx/price.reducer';
+import { cartFoodItemsReducer } from '../cart-food-items.ngrx/cart-food-items.reducer';
+
+const reducers: ActionReducerMap<any> = {
+  price: priceReducer,
+  cartFoodItems: cartFoodItemsReducer,
+};
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -30,7 +37,7 @@ import { priceReducer } from '../reducer/price.reducer';
     HttpClientInMemoryWebApiModule.forRoot(InMemoryDataService, {
       dataEncapsulation: false,
     }),
-    StoreModule.forRoot({ price: priceReducer }),
+    StoreModule.forRoot(reducers),
   ],
   providers: [],
   bootstrap: [AppComponent],

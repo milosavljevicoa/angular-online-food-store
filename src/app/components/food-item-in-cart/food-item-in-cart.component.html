@@ -1,6 +1,9 @@
 <div class="row">
   <div class="col-md-6">
-    <p class="mb-2">{{ foodItem.name }}</p>
+    <p class="mb-2">
+      {{ foodItem.name }}
+      <span *ngIf="countOfSameFood != 1">x{{ countOfSameFood }}</span>
+    </p>
     <p class="text-lead mb-2">{{ foodItem.price }} RSD</p>
   </div>
   <div class="col-md-6 to-right">

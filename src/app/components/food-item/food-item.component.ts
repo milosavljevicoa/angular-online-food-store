@@ -7,7 +7,7 @@ import { FoodItem } from '../../models/food-item.model';
   styleUrls: ['./food-item.component.css'],
 })
 export class FoodItemComponent implements OnInit {
-  @Input() foodItemToDisplay: FoodItem;
+  @Input() foodItem: FoodItem;
   @Output() addToCart: EventEmitter<void> = new EventEmitter<void>();
   constructor() {}
 

@@ -1,7 +1,20 @@
 <div class="row">
   <div class="col-12 col-md-6 mb-4">
-    <app-search-food-item (addToCart)="addToCart($event)">
+    <app-search-food-item
+      [allFastFoodRestaurants$]="allFastFoodRestaurants$"
+      (fastFoodRestaurantEmitter)="searchedFastFoodRestaurantName($event)"
+      (foodItemToSearchEmitter)="searchedFoodItemName($event)"
+    >
     </app-search-food-item>
+
+    <ul class="list-group mt-4">
+      <li class="list-group-item" *ngFor="let foodItem of foodItemsToDisplay">
+        <app-food-item
+          [foodItem]="foodItem"
+          (addToCart)="addToCart(foodItem)"
+        ></app-food-item>
+      </li>
+    </ul>
   </div>
 
   <div class="col-12 col-md-6">
@@ -11,10 +24,10 @@
     <ul class="list-group food-list-cart">
       <li
         class="list-group-item cart-item"
-        *ngFor="let foodItemInCart of foodItemsInCart"
+        *ngFor="let foodItemInCart of foodItemsInCart$ | async"
       >
         <app-food-item-in-cart
-          [foodItem]="foodItemInCart"
+          [foodItemInCart]="foodItemInCart"
           (remove)="removeFromCart($event)"
         ></app-food-item-in-cart>
       </li>

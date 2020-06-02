@@ -9,29 +9,33 @@ import { Store, select } from '@ngrx/store';
   styleUrls: ['./burgers-as-price.component.css'],
 })
 export class BurgersAsPriceComponent implements OnInit {
-  public howManyToDisplay$: Observable<Array<null>>;
+  private priceToAddNewBurgerIcon: number;
 
-  private priceToAddNewBurger: number;
+  public howManyIconsToDisplay$: Observable<Array<null>>;
 
-  constructor(private store: Store<{ price: number }>) {
-    this.priceToAddNewBurger = 500;
+  constructor(private store: Store<{ price: number }>) {}
 
-    this.howManyToDisplay$ = store.pipe(
+  ngOnInit(): void {
+    this.priceToAddNewBurgerIcon = 500;
+
+    this.howManyIconsToDisplay$ = this.store.pipe(
       select('price'),
-      mergeMap((price: number) => this.convertPriceToBurgersToDisplay$(price))
+      mergeMap((price: number) =>
+        this.convertPriceToBurgerIconsToDisplay$(price)
+      )
     );
   }
 
-  private convertPriceToBurgersToDisplay$(
+  private convertPriceToBurgerIconsToDisplay$(
     price: number
   ): Observable<Array<null>> {
-    let numberOfBurgersToDisplay = Math.floor(price / this.priceToAddNewBurger);
-    return of(this.createNgIteration(numberOfBurgersToDisplay));
+    let numberOfBurgersIconsToDisplay = Math.floor(
+      price / this.priceToAddNewBurgerIcon
+    );
+    return of(this.createNgIterator(numberOfBurgersIconsToDisplay));
   }
 
-  private createNgIteration(numberOfElements: number): Array<null> {
+  private createNgIterator(numberOfElements: number): Array<null> {
     return Array(numberOfElements).fill(0);
   }
-
-  ngOnInit(): void {}
 }
