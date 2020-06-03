@@ -7,8 +7,10 @@ export interface FoodItem {
   idInCart: number;
 }
 
-export interface FoodItemInCart {
-  food: FoodItem;
-  info: FoodItemInformation;
-  countOfSameFood: number;
+export class FoodItemInCart {
+  constructor(
+    public food: FoodItem,
+    public info: FoodItemInformation,
+    public countOfSameFood: number
+  ) {}
 }

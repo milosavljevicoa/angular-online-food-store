@@ -1,16 +1,22 @@
 import { createAction, props } from '@ngrx/store';
-import { FoodItem } from '../models/food-item.model';
-import { Observable } from 'rxjs';
-import { FoodItemInformation } from '../models/food-item-information.model';
+import { FoodItem, FoodItemInCart } from '../models/food-item.model';
 
-export const addNewFoodItemToCart = createAction(
-  '[CartFoodItem] AddNewFoodItemToCart',
-  props<{
-    foodItemToAdd: FoodItem;
-    getDescipritonOfFood: (id: number) => Observable<FoodItemInformation>;
-  }>()
-);
 export const removeFoodItemFromCart = createAction(
-  '[CartFoodItem] removeFoodItemFromCart',
-  props<{ foodItemToRemove: FoodItem }>()
+  '[Removing from component] removeFoodItemFromCart',
+  props<{ idOfFoodItemToRemove: number }>()
+);
+
+export const loadFoodItemInfoAddToCart = createAction(
+  '[Load Food Info From Api] load info from api and create food cart item ',
+  props<{ foodItem: FoodItem }>()
+);
+
+export const addFoodCartItemToCart = createAction(
+  '[Add from effect] add food cart item to cart',
+  props<{ foodCartItem: FoodItemInCart }>()
+);
+
+export const removeFoodCartItemFromCart = createAction(
+  '[Remove Food Cart Item and Reduce Total Price] removing food item by id',
+  props<{ foodItemInCart: FoodItemInCart }>()
 );

@@ -106,9 +106,7 @@ export class FoodService {
       );
   }
 
-  getFoodItemInformation$ = (
-    foodItemId: number
-  ): Observable<FoodItemInformation> => {
+  getFoodItemInformation$(foodItemId: number): Observable<FoodItemInformation> {
     return this.http
       .get<Array<FoodItemInformation>>(
         `${this.foodItemsInformationUrl}/?foodItemId=${foodItemId}`
@@ -117,5 +115,5 @@ export class FoodService {
         concatAll(),
         filter((info: FoodItemInformation) => info.foodItemId === foodItemId)
       );
-  };
+  }
 }

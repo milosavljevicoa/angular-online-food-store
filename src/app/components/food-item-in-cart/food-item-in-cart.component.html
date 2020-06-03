@@ -8,10 +8,42 @@
   </div>
   <div class="col-md-6 to-right">
     <button
-      class="btn btn-dark btn-sm btn-remove mb-2"
+      class="btn btn-dark btn-sm btn-remove mb-2 ml-auto"
       (click)="removeFromCart()"
     >
       X
     </button>
+    <button class="btn" (click)="btnClickDisplayModal()">
+      <i class="fas fa-info-circle info"></i>
+    </button>
+  </div>
+</div>
+
+<div
+  class="modal"
+  [style.display]="displayModal()"
+  [style.background-color]="'#d1d1d1ad'"
+  tabindex="-1"
+  role="dialog"
+>
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Information for {{ foodItem.name }}</h5>
+        <button type="button" class="close" (click)="btnClickDisplayModal()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p>Information per one meal</p>
+        <p>Calories: {{ foodInfo.calories }}cal</p>
+        <p>Weight: {{ foodInfo.weight }}</p>
+        <hr />
+        <p *ngIf="countOfSameFood > 1">
+          You have selected {{ countOfSameFood }} same items
+        </p>
+        <p>Total price is {{ countOfSameFood * foodItem.price }} RSD</p>
+      </div>
+    </div>
   </div>
 </div>

@@ -8,6 +8,11 @@
   align-items: center;
 }
 
+.info {
+  font-size: 18px;
+  color: rgb(41, 125, 235);
+}
+
 @media (max-width: 752px) {
   .to-right {
     justify-content: start;

@@ -119,6 +119,10 @@
           }
         }
       }
-    }},
-  "defaultProject": "angular-online-food-store"
+    }
+  },
+  "defaultProject": "angular-online-food-store",
+  "cli": {
+    "defaultCollection": "@ngrx/schematics"
+  }
 }

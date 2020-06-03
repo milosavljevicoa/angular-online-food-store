@@ -25,7 +25,6 @@ export class FoodStoreComponent implements OnInit {
   public foodItemsInCart$: Observable<Array<FoodItemInCart>>;
   public allFastFoodRestaurants$: Observable<Array<string>>;
 
-  public foodItemsIds$: Subject<number> = new Subject<number>();
   public foodItemNamePattern$: Subject<string> = new Subject();
   public specificFastFoodRestaurant$: Subject<string> = new Subject();
 
@@ -64,14 +63,6 @@ export class FoodStoreComponent implements OnInit {
       .subscribe((foodItemsToDisplay: Array<FoodItem>) => {
         this.foodItemsToDisplay = foodItemsToDisplay;
       });
-
-    this.foodItemsIds$
-      .pipe(
-        switchMap((id: number) =>
-          this.foodItemService.getFoodItemInformation$(id)
-        )
-      )
-      .subscribe((foodInfo: FoodItemInformation) => console.log(foodInfo));
   }
 
   searchedFoodItemName(foodName: string): void {
@@ -83,29 +74,20 @@ export class FoodStoreComponent implements OnInit {
   }
 
   addToCart(foodItem: FoodItem): void {
-    // console.log(foodItem);
     const foodToAdd = { ...foodItem };
     foodToAdd.idInCart = this.numberOfItemsInCart++;
-    this.foodItemsIds$.next(foodItem.id); //proveri
 
     this.cartFoodItemsStore.dispatch(
-      CartFoodItemsActions.addNewFoodItemToCart({
-        foodItemToAdd: foodToAdd,
-        getDescipritonOfFood: this.foodItemService.getFoodItemInformation$,
-      })
+      CartFoodItemsActions.loadFoodItemInfoAddToCart({ foodItem: foodItem })
     );
-
-    this.store.dispatch(PriceActions.addToPrice({ price: foodToAdd.price }));
   }
 
-  removeFromCart(foodItem: FoodItem): void {
+  removeFromCart(foodItem: FoodItemInCart): void {
+    console.log(foodItem);
     this.cartFoodItemsStore.dispatch(
-      CartFoodItemsActions.removeFoodItemFromCart({
-        foodItemToRemove: foodItem,
+      CartFoodItemsActions.removeFoodCartItemFromCart({
+        foodItemInCart: foodItem,
       })
-    );
-    this.store.dispatch(
-      PriceActions.removeFromPrice({ price: foodItem.price })
     );
   }
 }
