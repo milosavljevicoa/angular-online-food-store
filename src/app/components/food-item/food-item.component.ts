@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { FoodItem } from 'src/app/models/food-item.model';
+import { FoodItem } from '../../models/food-item.model';
 
 @Component({
   selector: 'app-food-item',

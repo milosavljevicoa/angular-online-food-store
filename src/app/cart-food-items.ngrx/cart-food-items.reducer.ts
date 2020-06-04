@@ -1,6 +1,6 @@
 import { Action, createReducer, on } from '@ngrx/store';
 import * as CartFoodActions from './cart-food-items.action';
-import { FoodItemInCart } from 'src/app/models/food-item.model';
+import { FoodItemInCart } from '../models/food-item.model';
 
 export const initialCart: Array<FoodItemInCart> = new Array();
 

@@ -1,7 +1,7 @@
 import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 import { Subject, Observable } from 'rxjs';
 import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
-import { FoodService } from 'src/app/services/food.service';
+import { FoodService } from '../../services/food.service';
 
 @Component({
   selector: 'app-search-food-item',

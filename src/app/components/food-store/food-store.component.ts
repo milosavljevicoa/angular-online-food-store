@@ -4,10 +4,10 @@ import { Observable, Subject } from 'rxjs';
 import { switchMap, take } from 'rxjs/operators';
 
 import { select, Store } from '@ngrx/store';
-import * as CartFoodItemsActions from 'src/app/cart-food-items.ngrx/cart-food-items.action';
+import * as CartFoodItemsActions from '../../cart-food-items.ngrx/cart-food-items.action';
 
-import { FoodItem, FoodItemInCart } from 'src/app/models/food-item.model';
-import { FoodService } from 'src/app/services/food.service';
+import { FoodItem, FoodItemInCart } from '../../models/food-item.model';
+import { FoodService } from '../../services/food.service';
 
 @Component({
   selector: 'app-food-store',
