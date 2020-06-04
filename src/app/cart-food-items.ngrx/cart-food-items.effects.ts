@@ -1,12 +1,16 @@
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { FoodService } from '../services/food.service';
-import * as CartFoodActions from './cart-food-items.action';
+
 import { mergeMap, catchError, map, tap } from 'rxjs/operators';
-import { FoodItemInformation } from '../models/food-item-information.model';
 import { EMPTY, of, Observable } from 'rxjs';
-import { FoodItem, FoodItemInCart } from '../models/food-item.model';
-import * as PriceActions from '../price.ngrx/price.action';
+
+import * as CartFoodActions from './cart-food-items.action';
+import * as PriceActions from 'src/app/price.ngrx/price.action';
+
+import { FoodItemInformation } from 'src/app/models/food-item-information.model';
+import { FoodItem, FoodItemInCart } from 'src/app/models/food-item.model';
+
+import { FoodService } from 'src/app/services/food.service';
 
 @Injectable()
 export class CartFoodItemsEffects {

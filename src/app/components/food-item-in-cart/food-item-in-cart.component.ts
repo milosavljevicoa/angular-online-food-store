@@ -1,13 +1,5 @@
-import {
-  Component,
-  OnInit,
-  Input,
-  Output,
-  EventEmitter,
-  ViewChild,
-  ElementRef,
-} from '@angular/core';
-import { FoodItem, FoodItemInCart } from '../../models/food-item.model';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { FoodItem, FoodItemInCart } from 'src/app/models/food-item.model';
 import { FoodItemInformation } from 'src/app/models/food-item-information.model';
 
 @Component({
@@ -20,8 +12,6 @@ export class FoodItemInCartComponent implements OnInit {
   @Output() removeFoodItemInCart: EventEmitter<
     FoodItemInCart
   > = new EventEmitter<FoodItemInCart>();
-
-  @ViewChild('modal') modal: ElementRef;
 
   public foodItem: FoodItem;
   public foodInfo: FoodItemInformation;
