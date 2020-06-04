@@ -26,7 +26,6 @@ const _foodItemsInCartReducer = createReducer(
           const updatedFoodItem: FoodItemInCart = decreaseCountOfSameFood(
             foodInCart
           );
-          console.log(updatedFoodItem);
           return updatedFoodItem;
         }
         return foodInCart;

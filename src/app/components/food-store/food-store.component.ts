@@ -4,7 +4,7 @@ import { Observable, Subject } from 'rxjs';
 import { switchMap, take } from 'rxjs/operators';
 
 import { select, Store } from '@ngrx/store';
-import * as PriceActions from '../../price.NgRx/price.action';
+import * as PriceActions from '../../price.ngrx/price.action';
 import * as CartFoodItemsActions from '../../cart-food-items.ngrx/cart-food-items.action';
 
 import { FoodItem, FoodItemInCart } from '../../models/food-item.model';

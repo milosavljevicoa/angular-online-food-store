@@ -6,7 +6,7 @@ import { mergeMap, catchError, map, tap } from 'rxjs/operators';
 import { FoodItemInformation } from '../models/food-item-information.model';
 import { EMPTY, of, Observable } from 'rxjs';
 import { FoodItem, FoodItemInCart } from '../models/food-item.model';
-import * as PriceActions from '../price.NgRx/price.action';
+import * as PriceActions from '../price.ngrx/price.action';
 
 @Injectable()
 export class CartFoodItemsEffects {

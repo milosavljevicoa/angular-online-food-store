@@ -14,7 +14,7 @@ import { BurgersAsPriceComponent } from './components/burgers-as-price/burgers-a
 
 import { StoreModule, ActionReducerMap } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
-import { priceReducer } from './price.NgRx/price.reducer';
+import { priceReducer } from './price.ngrx/price.reducer';
 import { cartFoodItemsReducer } from './cart-food-items.ngrx/cart-food-items.reducer';
 import { CartFoodItemsEffects } from './cart-food-items.ngrx/cart-food-items.effects';
 
