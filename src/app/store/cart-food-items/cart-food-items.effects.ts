@@ -5,12 +5,12 @@ import { mergeMap, catchError, map, tap } from 'rxjs/operators';
 import { EMPTY, of, Observable } from 'rxjs';
 
 import * as CartFoodActions from './cart-food-items.action';
-import * as PriceActions from '../price.ngrx/price.action';
+import * as PriceActions from '../price/price.action';
 
-import { FoodItemInformation } from '../models/food-item-information.model';
-import { FoodItem, FoodItemInCart } from '../models/food-item.model';
+import { FoodItemInformation } from '../../models/food-item-information.model';
+import { FoodItem, FoodItemInCart } from '../../models/food-item.model';
 
-import { FoodService } from '../services/food.service';
+import { FoodService } from '../../services/food.service';
 
 @Injectable()
 export class CartFoodItemsEffects {

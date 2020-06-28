@@ -20,6 +20,7 @@ import { CartFoodItemsEffects } from './cart-food-items.ngrx/cart-food-items.eff
 
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { environment } from '../environments/environment';
+import { ExerciseComponent } from './components/food-store/components/exercise/exercise.component';
 
 const reducers: ActionReducerMap<any> = {
   price: priceReducer,
@@ -34,6 +35,7 @@ const reducers: ActionReducerMap<any> = {
     FoodItemInCartComponent,
     SearchFoodItemComponent,
     BurgersAsPriceComponent,
+    ExerciseComponent,
   ],
   imports: [
     BrowserModule,

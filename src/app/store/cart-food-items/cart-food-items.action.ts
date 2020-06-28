@@ -1,5 +1,5 @@
 import { createAction, props } from '@ngrx/store';
-import { FoodItem, FoodItemInCart } from '../models/food-item.model';
+import { FoodItem, FoodItemInCart } from '../../models/food-item.model';
 
 export const removeFoodItemFromCart = createAction(
   '[Removing from component] removeFoodItemFromCart',
